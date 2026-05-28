@@ -1,0 +1,4 @@
+- load California Housing dataset
+- convert it into a pandas DataFrame
+- separate features X and target y
+- split into train and test data
