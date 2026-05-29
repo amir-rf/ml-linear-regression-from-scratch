@@ -37,8 +37,8 @@ class LinearRegressionScartch:
 
 
 
-def predict(self, X):
+    def predict(self, X):
 
-    return np.dot(X, self.weights) + self.bias
+        return np.dot(X, self.weights) + self.bias
 
 
