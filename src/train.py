@@ -1,6 +1,10 @@
-import numpy as np
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+from evaluate import (
+    compute_regression_metrics,
+    plot_loss_curve,
+    plot_prediction_vs_actual,
+    plot_residual_histogram,
+)
 from data import load_california_housing, split_data
 from linear_regression import LinearRegressionScartch
 from preprocessing import scale_features
@@ -25,14 +29,9 @@ def main():
     y_train_pred = model.predict(X_train_scaled)
     y_test_pred = model.predict(X_test_scaled)
 
-    train_mae = mean_absolute_error(y_train_array, y_train_pred)
-    test_mae = mean_absolute_error(y_test_array, y_test_pred)
 
-    train_rmse = np.sqrt(mean_squared_error(y_train_array, y_train_pred))
-    test_rmse = np.sqrt(mean_squared_error(y_test_array, y_test_pred))
-
-    train_r2 = r2_score(y_train_array, y_train_pred)
-    test_r2 = r2_score(y_test_array, y_test_pred)
+    train_metrics = compute_regression_metrics(y_train_array, y_train_pred)
+    test_metrics = compute_regression_metrics(y_test_array, y_test_pred)
 
     print("\n" + "="*80)
     print("Training complete")
@@ -43,18 +42,22 @@ def main():
     print(f"Bias/intercept: {model.bias:.4f}")
 
     print("\nTraining performance:")
-    print(f"MAE: {train_mae:.4f}")
-    print(f"RMSE: {train_rmse:.4f}")
-    print(f"R^2: {train_r2:.4f}")
+    for metric_name, metric_value in train_metrics.items():
+        print(f"{metric_name}: {metric_value:.4f}")
 
-    print("\nTesting performance:")
-    print(f"MAE: {test_mae:.4f}")
-    print(f"RMSE: {test_rmse:.4f}")
-    print(f"R^2: {test_r2:.4f}")
-
+    for metric_name, metric_value in test_metrics.items():
+        print(f"{metric_name}: {metric_value:.4f}")
+        
     print("\nLearned feature weights:")
     for feature_name, weight in zip(X.columns, model.weights):
         print(f"{feature_name:>10}: {weight:.4f}")
+
+    
+    plot_loss_curve(model.loss_history)
+    plot_prediction_vs_actual(y_test_array, y_test_pred)
+    plot_residual_histogram(y_test_array, y_test_pred)
+
+    print("\nSaved diagnostic plots to the figures/ folder.")
 
 
 if __name__ == "__main__":
