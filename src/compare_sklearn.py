@@ -96,7 +96,7 @@ def main():
     ):
         diff = scratch_w - sklearn_w
         print(
-            f"{feature_name:>10}: diff{diff: .8f}"
+            f"{feature_name:>10}: diff={diff: .8f}"
         )
 
 
