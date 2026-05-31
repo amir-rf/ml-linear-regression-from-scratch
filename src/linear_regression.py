@@ -2,9 +2,15 @@ import numpy as np
 
 class LinearRegressionScartch:
     
-    def __init__(self, learning_rate=0.01, n_iteration=1000,):
+    def __init__(self, 
+                learning_rate=0.01,
+                n_iteration=1000,
+                verbose=False,
+                print_every=100,):
         self.learning_rate = learning_rate
         self.n_iteration = n_iteration
+        self.verbose = verbose
+        self.print_every = print_every
 
         self.bias = None
         self.weights = None
@@ -32,7 +38,7 @@ class LinearRegressionScartch:
 
             self.loss_history.append(loss)
 
-            if iteration % 100 == 0:
+            if self.verbose and iteration % self.print_every == 0:
                 print(f"Iteration {iteration}, Loss: {loss:.4f}")
 
 

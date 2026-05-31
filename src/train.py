@@ -22,6 +22,8 @@ def main():
 
     model = LinearRegressionScartch(
         learning_rate=0.01, n_iteration=1000,
+        verbose=True,
+        print_every=100,
     )
 
     model.fit(X_train_scaled, y_train_array)

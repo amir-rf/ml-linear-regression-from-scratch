@@ -69,7 +69,8 @@ def main():
     for learning_rate, n_iter in experiments:
         gd_model = LinearRegressionScartch(
             learning_rate=learning_rate,
-            n_iteration=n_iter,)
+            n_iteration=n_iter,
+            verbose=False)
         gd_model.fit(X_train_scaled, y_train_array)
 
         y_test_pred = gd_model.predict(X_test_scaled)
